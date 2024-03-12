@@ -1,12 +1,11 @@
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 
-export default function TabTwoScreen() {
+export default function ReelsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>THIS IS SEARCH SCREEN</Text>
+      <Text style={styles.title}>THIS IS REELS SCREEN</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
