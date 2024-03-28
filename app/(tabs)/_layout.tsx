@@ -1,21 +1,8 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Tabs } from "expo-router";
 import { Icon } from "react-native-elements";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import { View } from "@/components/Themed";
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 function TabBarIconOptional(props: {
   name: React.ComponentProps<typeof Icon>["name"];
@@ -27,97 +14,89 @@ function TabBarIconOptional(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
-    "Instagram-Title": require("../../assets/fonts/Instagram-Title.ttf"),
-  });
 
   return (
     <Tabs
-    // screenOptions={{
-    //   tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-    //   headerShown: useClientOnlyValue(false, true),
-    // }}
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        headerShown: false,
+      }}
     >
+      {/* This is Home Screen Page */}
       <Tabs.Screen
-        name="index"
+        name="homeScreen"
         options={{
           title: "Instagram",
           tabBarShowLabel: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIconOptional name="home" color={color} />
-          ),
-          headerRight: () => (
-            <View style={{ display: "flex", flexDirection: "row" }}>
-              <Link href="/modal" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <Icon
-                      name="heart"
-                      type="feather"
-                      size={25}
-                      color={Colors[colorScheme ?? "light"].text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/modal" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="star-o"
-                      size={25}
-                      color={Colors[colorScheme ?? "light"].text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
+          tabBarIcon: ({ focused }) => (
+            <TabBarIconOptional
+              name="home"
+              color={focused ? "black" : "grey"}
+            />
           ),
         }}
       />
+
+      {/* This is Search bar Page */}
       <Tabs.Screen
         name="two"
         options={{
           title: "Search",
           tabBarShowLabel: false,
-
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIconOptional
+              name="search"
+              color={focused ? "black" : "grey"}
+            />
+          ),
         }}
       />
+
+      {/* This is add Post Page */}
       <Tabs.Screen
         name="addPost"
         options={{
           title: "Add Post",
-          tabBarIcon: ({ color }) => (
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
             <TabBarIconOptional
               name="plus-square"
-              color={color}
+              color={focused ? "black" : "grey"}
               type="feather"
             />
           ),
-          tabBarShowLabel: false,
         }}
       />
+
+      {/* This is Reels Page */}
       <Tabs.Screen
         name="Reels"
         options={{
           title: "Reels",
-          tabBarIcon: ({ color }) => (
-            <TabBarIconOptional name="film" color={color} type="feather" />
-          ),
           tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIconOptional
+              name="film"
+              color={focused ? "black" : "grey"}
+              type="feather"
+            />
+          ),
         }}
       />
+
+      {/* This is User Profile Page */}
       <Tabs.Screen
         name="user"
         options={{
           title: "User",
-          tabBarIcon: ({ color }) => (
-            <TabBarIconOptional name="user" color={color} type="font-awesome" />
-          ),
           tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIconOptional
+              name="user"
+              color={focused ? "black" : "grey"}
+              type="font-awesome"
+            />
+          ),
         }}
       />
     </Tabs>
