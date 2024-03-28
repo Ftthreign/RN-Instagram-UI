@@ -1,33 +1,20 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "@/components/Header";
-import Stories from "@/components/Stories";
+import Header from "@/components/homeScreen/Header";
+import Stories from "@/components/homeScreen/Stories";
+import Posts from "@/components/homeScreen/Posts";
+import { ScrollView } from "react-native";
+import { post } from "@/data/post";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView>
       <Header />
       <Stories />
+      <ScrollView>
+        {post.map((data, index) => (
+          <Posts key={index} post={data} />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: "bold",
-//     textAlign: "center",
-//     padding: 20,
-//     backgroundColor: "#eee",
-//     color: "black",
-//   },
-//   separator: {
-//     marginVertical: 30,
-//     height: 1,
-//     width: "80%",
-//   },
-// });

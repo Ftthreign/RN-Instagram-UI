@@ -3,6 +3,8 @@ import { Tabs } from "expo-router";
 import { Icon } from "react-native-elements";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
+import { users } from "@/data/users";
+import { View, Image, TouchableOpacity } from "react-native";
 
 function TabBarIconOptional(props: {
   name: React.ComponentProps<typeof Icon>["name"];
@@ -31,7 +33,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIconOptional
               name="home"
-              color={focused ? "black" : "grey"}
+              color={
+                focused ? (colorScheme === "dark" ? "white" : "black") : "grey"
+              }
             />
           ),
         }}
@@ -46,7 +50,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIconOptional
               name="search"
-              color={focused ? "black" : "grey"}
+              color={
+                focused ? (colorScheme === "dark" ? "white" : "black") : "grey"
+              }
             />
           ),
         }}
@@ -61,7 +67,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIconOptional
               name="plus-square"
-              color={focused ? "black" : "grey"}
+              color={
+                focused ? (colorScheme === "dark" ? "white" : "black") : "grey"
+              }
               type="feather"
             />
           ),
@@ -77,7 +85,9 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIconOptional
               name="film"
-              color={focused ? "black" : "grey"}
+              color={
+                focused ? (colorScheme === "dark" ? "white" : "black") : "grey"
+              }
               type="feather"
             />
           ),
@@ -90,12 +100,19 @@ export default function TabLayout() {
         options={{
           title: "User",
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIconOptional
-              name="user"
-              color={focused ? "black" : "grey"}
-              type="font-awesome"
-            />
+          tabBarIcon: () => (
+            <View>
+              <TouchableOpacity>
+                <Image
+                  source={{ uri: users[0].image }}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 50,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
           ),
         }}
       />
