@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Icon } from "react-native-elements";
 import Colors from "@/constants/Colors";
-import { useColorScheme } from "@/components/useColorScheme";
+import { useColorScheme } from "@/components/hooks/useColorScheme";
 import { users } from "@/data/users";
 import { View, Image, TouchableOpacity } from "react-native";
 
@@ -22,6 +22,12 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarAccessibilityLabel: "Moving Tabs",
+        tabBarStyle: {
+          backgroundColor: colorScheme === "dark" ? "black" : "white",
+          bottom: 0,
+          marginEnd: 0,
+        },
       }}
     >
       {/* This is Home Screen Page */}

@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { users } from "../../data/users";
 import { StyleSheet } from "react-native";
@@ -8,14 +8,16 @@ const Stories = () => {
     <View style={{ marginBottom: 13 }}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {users.map((data, index) => (
-          <View key={index} style={{ alignItems: "center" }}>
-            <Image style={Styles.storyImage} source={{ uri: data.image }} />
-            <Text style={Styles.userText}>
-              {data.user.length > 20
-                ? data.user.slice(0, 19).toLowerCase() + "..."
-                : data.user}
-            </Text>
-          </View>
+          <TouchableOpacity key={index}>
+            <View style={{ alignItems: "center" }}>
+              <Image style={Styles.storyImage} source={{ uri: data.image }} />
+              <Text style={Styles.userText}>
+                {data.user.length > 20
+                  ? data.user.slice(0, 19).toLowerCase() + "..."
+                  : data.user}
+              </Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>

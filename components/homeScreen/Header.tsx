@@ -1,8 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
-import { useColorScheme } from "../useColorScheme";
-
+import { useColorScheme } from "../hooks/useColorScheme";
 function TabBarIconOptional(props: {
   name: React.ComponentProps<typeof Icon>["name"];
   color?: string;

@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Divider } from "react-native-elements";
 import { Icon } from "react-native-elements";
-import { useColorScheme } from "../useColorScheme";
+import { useColorScheme } from "../hooks/useColorScheme";
 
 function TabBarIconOptional(props: {
   name: React.ComponentProps<typeof Icon>["name"];
@@ -17,15 +17,26 @@ interface IPost {
   image: string;
   likes: number;
   caption: string;
-  commentsCount: number;
+  comments: {
+    commentsCount: number;
+    commentsMessage?: string;
+    commentsFrom?: string;
+  }[];
 }
 
 interface IProps {
   post: IPost;
 }
 
+type theme = "dark" | "white" | "black" | "white" | string;
+
 const Posts: React.FC<IProps> = ({ post }) => {
   const colorScheme = useColorScheme();
+
+  function handleTheme(): theme {
+    return colorScheme === "dark" ? "white" : "black";
+  }
+
   return (
     <View>
       <Divider width={1} orientation="vertical" />
@@ -47,21 +58,21 @@ const Posts: React.FC<IProps> = ({ post }) => {
             <TabBarIconOptional
               name="heart"
               type="feather"
-              color={colorScheme === "dark" ? "white" : "black"}
+              color={handleTheme()}
             />
           </TouchableOpacity>
           <TouchableOpacity style={{ marginRight: 15 }}>
             <TabBarIconOptional
               name="message-circle"
               type="feather"
-              color={colorScheme === "dark" ? "white" : "black"}
+              color={handleTheme()}
             />
           </TouchableOpacity>
           <TouchableOpacity style={{ marginRight: 15 }}>
             <TabBarIconOptional
               name="send"
               type="feather"
-              color={colorScheme === "dark" ? "white" : "black"}
+              color={handleTheme()}
             />
           </TouchableOpacity>
         </View>
@@ -70,7 +81,7 @@ const Posts: React.FC<IProps> = ({ post }) => {
             <TabBarIconOptional
               name="bookmark"
               type="feather"
-              color={colorScheme === "dark" ? "white" : "black"}
+              color={handleTheme()}
             />
           </TouchableOpacity>
         </View>
@@ -82,18 +93,26 @@ const Posts: React.FC<IProps> = ({ post }) => {
             : post.likes.toString()
         } Likes`}</Text>
       </View>
-      <View style={{ flexDirection: "row", marginLeft: 14, marginTop: 8 }}>
-        <Text style={{ fontWeight: "700", marginRight: 10 }}>
-          {post.username}
+      <View>
+        <Text style={{ marginLeft: 14, marginTop: 8 }}>
+          <Text style={Styles.usernameText}>{post.username}</Text>
+          <Text style={{ marginLeft: 10 }}> {post.caption}</Text>
         </Text>
-        <Text>{post.caption}</Text>
       </View>
-      <View style={{ flexDirection: "row", margin: 14 }}>
+      <View style={{ flexDirection: "column", margin: 14 }}>
         <TouchableOpacity>
-          <Text
-            style={{ color: "grey" }}
-          >{`See ${post.commentsCount} Comments`}</Text>
+          <Text style={{ color: "grey" }}>{`See ${
+            post.comments && post.comments[0]?.commentsCount
+          } Comments`}</Text>
         </TouchableOpacity>
+        {post.comments[0] && (
+          <Text style={{ marginBottom: 24 }}>
+            <Text style={Styles.usernameText}>
+              {post.comments[0]?.commentsFrom}
+            </Text>
+            <Text>{`  ${post.comments[0]?.commentsMessage || ""}`}</Text>
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -118,6 +137,10 @@ const Styles = StyleSheet.create({
     margin: 8,
     borderColor: "#ff8501",
     borderWidth: 1,
+  },
+  usernameText: {
+    fontWeight: "700",
+    marginRight: 12,
   },
 });
 
